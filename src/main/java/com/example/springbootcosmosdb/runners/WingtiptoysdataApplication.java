@@ -25,12 +25,12 @@ public class WingtiptoysdataApplication implements CommandLineRunner {
         userRepository.deleteAll().block();
         LOGGER.info("Deleted all data in container.");
 
-        final User testUser = new User("testId", "testFirstName", "testLastName", "test address line one");
+        final User testUser = new User("1234", "Pepe", "Pecas", "Entre ríos y cerros.");
 
         // Save the User class to Azure Cosmos DB database.
         final Mono<User> saveUserMono = userRepository.save(testUser);
 
-        final Flux<User> firstNameUserFlux = userRepository.findByFirstName("testFirstName");
+        final Flux<User> firstNameUserFlux = userRepository.findByFirstName("Pepe");
 
         //  Nothing happens until we subscribe to these Monos.
         //  findById will not return the user as user is not present.
@@ -51,7 +51,7 @@ public class WingtiptoysdataApplication implements CommandLineRunner {
         Assert.state(result.getFirstName().equals(testUser.getFirstName()), "query result firstName doesn't match!");
         Assert.state(result.getLastName().equals(testUser.getLastName()), "query result lastName doesn't match!");
 
-        LOGGER.info("findOne in User collection get result: {}", result.toString());
+        LOGGER.info("findOne in User collection get result: {}", result);
     }
 
 }
